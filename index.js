@@ -10,9 +10,11 @@ app.listen(port, () => {
 })
   
 const adminRouting = require('./routes/admin-routes/admin-routing');
+const userRouting = require('./routes/user-routes/user-routing');
+
 //const workersRouting = require('./routes/workers-routes/workers-routing');
 
-app.use('/api', adminRouting);
+app.use('/api', adminRouting,userRouting);
 
 
 

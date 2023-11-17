@@ -1,8 +1,21 @@
-const adminModel = require('../../models/admin-model');
+const userModel = require('../../models/user-model');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 // const {setTokenCookie} = require('../middlewares/verifytoken.js')
 require("dotenv").config();
+
+async function getUser(req, res, next){
+    const { token } = req.body;
+    try {
+        const login = {
+        status: res.status(200) ? 'successful' : 'err server',
+        data : [await userModel.getUser(token)],
+        }
+        res.json(login);
+    } catch (error) {
+        next(error);
+    }
+}
 
 async function login(req, res, next){
     const { email, password } = req.body;
@@ -10,7 +23,7 @@ async function login(req, res, next){
     try {
       const login = {
         status: res.status(200) ? 'successful' : 'err server',
-        data : [await adminModel.login(email, encryptedPassword )],
+        data : [await userModel.login(email, encryptedPassword )],
       }
 
       if (login.data[0].token != null) {
@@ -34,7 +47,7 @@ async function register(req, res, next){
     try {
       const login = {
         status: res.status(200) ? 'successful' : 'err server',
-        data : await adminModel.register(full_name, email, encryptedPassword, token,role),
+        data : await userModel.register(full_name, email, encryptedPassword, token,role),
       }
       res.json(login);
     } catch (error) {
@@ -43,7 +56,14 @@ async function register(req, res, next){
 }
 
 
+async function createCv(req, res, next){
+
+}
+
+
   module.exports = {
     register,
-    login
+    login,
+    createCv,
+    getUser,
   };
