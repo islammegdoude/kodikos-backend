@@ -1,7 +1,7 @@
-const adminModel = require('../model/admin-model');
+const adminModel = require('../../models/admin-model');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-const {setTokenCookie} = require('../middlewares/verifytoken.js')
+// const {setTokenCookie} = require('../middlewares/verifytoken.js')
 require("dotenv").config();
 
 async function login(req, res, next){
